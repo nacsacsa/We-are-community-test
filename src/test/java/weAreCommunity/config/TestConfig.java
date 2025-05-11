@@ -1,6 +1,6 @@
 package weAreCommunity.config;
 
-import weAreCommunity.config.factory.WebDriverFactory;
+import weAreCommunity.factory.WebDriverFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

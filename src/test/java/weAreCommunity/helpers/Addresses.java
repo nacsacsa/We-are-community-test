@@ -1,4 +1,4 @@
-package weAreCommunity.config.helpers;
+package weAreCommunity.helpers;
 
 public class Addresses {
     public static final String MAIN_PAGE = "https://wearecommunity.io/";

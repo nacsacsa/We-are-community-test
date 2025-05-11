@@ -1,4 +1,4 @@
-package weAreCommunity.config;
+package weAreCommunity;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
