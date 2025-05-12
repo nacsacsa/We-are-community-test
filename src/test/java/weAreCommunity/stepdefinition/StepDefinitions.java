@@ -1,5 +1,6 @@
 package weAreCommunity.stepdefinition;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import org.junit.Assert;
 import org.openqa.selenium.NoSuchElementException;
@@ -16,6 +17,7 @@ import org.openqa.selenium.WebDriver;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import weAreCommunity.pageobjects.MainPage;
+import weAreCommunity.pageobjects.VideosPage;
 
 import static org.junit.Assert.*;
 import static weAreCommunity.helpers.Addresses.MAIN_PAGE;
@@ -30,15 +32,17 @@ public class StepDefinitions {
     MainPage mainPage;
 
     @Autowired
+    VideosPage videoPage;
+
+    @Autowired
     WebDriverFactory webDriverFactory;
 
     private static final Duration TIMEOUT_SECONDS = Duration.ofSeconds(3);
     private static final Duration POLLING_TIMEOUT_SECONDS = Duration.ofSeconds(1);
 
-    @Given("the user is on the Communities page")
+    @Given("the user is on the main page")
     public void userIsOnTheCommunitiesPage() {
         webDriverFactory.getDriver().get(MAIN_PAGE);
-        mainPage.clickOnCommunitiesButton();
     }
 
     @When("The Communities button is clicked")
@@ -66,6 +70,33 @@ public class StepDefinitions {
                     (ExpectedCondition<Boolean>) driver1 -> !communitiesPage.getCommunityCardTitles().isEmpty());
         } catch (TimeoutException e) {
             Assert.fail("Expected card count did not match actual card count.");
+        }
+    }
+
+    @When("The Videos button is clicked")
+    public void theVideosButtonIsClicked() {
+        mainPage.clickOnVideoButton();
+    }
+
+    @And("The language is changed to Russian")
+    public void theLanguageIsChangedToRussian() {
+        mainPage.changeLangToRUS();
+    }
+
+    @Then("The page should display the text {string}")
+    public void thePageShouldDisplayTheText(String text) throws InterruptedException {
+        Thread.sleep(500);
+        WebDriver driver = webDriverFactory.getDriver();
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(TIMEOUT_SECONDS)
+                .pollingEvery(POLLING_TIMEOUT_SECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        try {
+            wait.until(
+                    (ExpectedCondition<Boolean>) driver1 -> videoPage.GetTitle().equals("Популярные вещи"));
+        } catch (TimeoutException e) {
+            Assert.fail("Expected title should be Популярные вещи");
         }
     }
 }

@@ -25,6 +25,25 @@ public class MainPage {
     @FindBy(className = "talks-library-icon")
     private WebElement videoButton;
 
+    @FindBy(id = "languageDropdown")
+    private WebElement langChange;
+
+    @FindBy(xpath = "//a[contains(text(),'Русский')]")
+    private WebElement langRU;
+
+    @FindBy(xpath = "//a[contains(text(),'English')]")
+    private WebElement langEN;
+
+    public void changeLangToRUS() {
+        langChange.click();
+        langRU.click();
+    }
+
+    public void changeLangToENG() {
+        langChange.click();
+        langEN.click();
+    }
+
     public void clickOnCommunitiesButton() {
         communitiesButton.click();
     }
