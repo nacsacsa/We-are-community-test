@@ -1,5 +1,6 @@
 package weAreCommunity.pageobjects;
 
+import io.cucumber.java.en.And;
 import weAreCommunity.factory.WebDriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,6 +35,24 @@ public class CommunitiesPage {
     @FindBy(css = ".evnt-search-filter .form-control.evnt-search")
     private WebElement searchInput;
 
+    @FindBy(className = "evnt-toggle-filters-button")
+    private WebElement moreFiltersButton;
+
+    @FindBy(id = "filter_language")
+    private WebElement languageFilter;
+
+    @FindBy(id = "filter_community_participation_format")
+    private WebElement formatFilter;
+
+    @FindBy(xpath = "//label[@data-value='Hungarian']")
+    private WebElement hungarianLanguage;
+
+    @FindBy(xpath = "//label[@data-value='Online only']")
+    private WebElement onlineOnly;
+
+    @FindBy(className = "evnt-clear-filters")
+    private WebElement clearAll;
+
     public WebElement getCard() {
         return cards.get(0);
     }
@@ -60,4 +79,15 @@ public class CommunitiesPage {
                 .toList();
     }
 
+    public void clickOnShowMore(){moreFiltersButton.click();}
+
+    public void addHungarianAndOnlineOnlyFilters(){
+        languageFilter.click();
+        hungarianLanguage.click();
+        formatFilter.click();
+        onlineOnly.click();
+    }
+    public void clickOnClearAll(){
+        clearAll.click();
+    }
 }

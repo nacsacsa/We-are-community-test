@@ -157,4 +157,49 @@ public class StepDefinitions {
     }
 
 
+    @And("The Show More button is clicked")
+    public void theShowMoreButtonIsPressed(){
+        communitiesPage.clickOnShowMore();
+    }
+
+    @And("The Hungarian Language and Online Only Format filters are added")
+    public void addHungarianAndOnlineOnlyFilters(){communitiesPage.addHungarianAndOnlineOnlyFilters();
+    communitiesPage.clickOnShowMore();}
+
+    @Then("The displayed number of communities should be 4")
+    public void theDisplayedResultShouldBe4() throws InterruptedException {
+        Thread.sleep(500);
+        WebDriver driver = webDriverFactory.getDriver();
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(TIMEOUT_SECONDS)
+                .pollingEvery(POLLING_TIMEOUT_SECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        try {
+            wait.until(
+                    (ExpectedCondition<Boolean>) driver1 -> communitiesPage.getResultCount()==4);
+        } catch (TimeoutException e) {
+            Assert.fail("Expected card count did not match actual card count.");
+        }}
+
+    @When("The filters are cleared")
+    public void filtersAreCleared(){
+        communitiesPage.clickOnClearAll();
+    }
+
+    @Then("The number of cards displayed should still be 4")
+    public void theDisplayedResultShouldStillBe4() throws InterruptedException {
+        Thread.sleep(500);
+        WebDriver driver = webDriverFactory.getDriver();
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(TIMEOUT_SECONDS)
+                .pollingEvery(POLLING_TIMEOUT_SECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        try {
+            wait.until(
+                    (ExpectedCondition<Boolean>) driver1 -> communitiesPage.getResultCount()==4);
+        } catch (TimeoutException e) {
+            Assert.fail("Expected card count did not match actual card count.");
+        }}
 }
