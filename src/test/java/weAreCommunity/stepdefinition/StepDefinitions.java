@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import weAreCommunity.pageobjects.EventsPage;
 import weAreCommunity.pageobjects.MainPage;
 import weAreCommunity.pageobjects.VideosPage;
+import io.cucumber.java.After;
 
 import static org.junit.Assert.*;
 import static weAreCommunity.helpers.Addresses.MAIN_PAGE;
@@ -43,6 +44,16 @@ public class StepDefinitions {
 
     private static final Duration TIMEOUT_SECONDS = Duration.ofSeconds(3);
     private static final Duration POLLING_TIMEOUT_SECONDS = Duration.ofSeconds(1);
+
+
+    @After
+    public void resetLanguageToEnglish(){
+        try{
+            mainPage.changeLangToENG();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
     @Given("the user is on the main page")
     public void userIsOnTheCommunitiesPage() {
@@ -128,4 +139,22 @@ public class StepDefinitions {
     public void theUpcomingEventsCounterShouldBeAccurate() {
         Assert.assertTrue(eventsPage.isUpcomingEventsCounterCorrect());
     }
+    @Then("each Community card should have a button labeled {string}")
+    public void thePageShouldDisplayConnect(String connectText) throws InterruptedException{
+        Thread.sleep(500);
+        WebDriver driver = webDriverFactory.getDriver();
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(TIMEOUT_SECONDS)
+                .pollingEvery(POLLING_TIMEOUT_SECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        try {
+            wait.until(
+                    (ExpectedCondition<Boolean>) driver1 -> communitiesPage.getCommunityCardButtonText().equals("Connect"));
+        } catch (TimeoutException e) {
+            Assert.fail("Expected title should be Connect");
+        }
+    }
+
+
 }

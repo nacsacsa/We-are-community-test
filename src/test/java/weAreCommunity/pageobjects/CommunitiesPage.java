@@ -22,6 +22,9 @@ public class CommunitiesPage {
     @FindBy(css = ".evnt-name-wrapper")
     private List<WebElement> communityCardTitles;
 
+    @FindBy(xpath = "//*[@id='e2b6a836-b315-4d74-ba79-7dc98bd70fd1']")
+    private WebElement communityCardButtonText;
+
     @FindBy(className = "evnt-sorting-dropdown")
     private WebElement sortingDropdown;
 
@@ -33,6 +36,11 @@ public class CommunitiesPage {
 
     public WebElement getCard() {
         return cards.get(0);
+    }
+
+
+    public String getCommunityCardButtonText(){
+        return communityCardButtonText.getText();
     }
 
     public void searchForCommunity(String input) {
