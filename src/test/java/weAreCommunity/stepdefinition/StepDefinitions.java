@@ -16,6 +16,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
+import weAreCommunity.pageobjects.EventsPage;
 import weAreCommunity.pageobjects.MainPage;
 import weAreCommunity.pageobjects.VideosPage;
 
@@ -33,6 +34,9 @@ public class StepDefinitions {
 
     @Autowired
     VideosPage videoPage;
+
+    @Autowired
+    EventsPage eventsPage;
 
     @Autowired
     WebDriverFactory webDriverFactory;
@@ -98,5 +102,30 @@ public class StepDefinitions {
         } catch (TimeoutException e) {
             Assert.fail("Expected title should be Популярные вещи");
         }
+    }
+
+    @When("The Events button is clicked")
+    public void theEventsButtonIsClicked() {
+        mainPage.clickOnEventsButton();
+    }
+
+    @And("The More Filters button is clicked")
+    public void theMoreFiltersButtonIsClicked() {
+        eventsPage.clickOnMoreFilters();
+    }
+
+    @And("The Date From filter is applied")
+    public void theDateFromFilterIsApplied() {
+        eventsPage.applyDateFromFilter();
+    }
+
+    @And("The Date Till filter is applied")
+    public void theDateTillFilterIsApplied() {
+        eventsPage.applyDateFillFilter();
+    }
+
+    @Then("The Upcoming Events counter should be accurate")
+    public void theUpcomingEventsCounterShouldBeAccurate() {
+        Assert.assertTrue(eventsPage.isUpcomingEventsCounterCorrect());
     }
 }
